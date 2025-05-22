@@ -40,7 +40,15 @@ Este proyecto tiene como objetivo desarrollar una plataforma web para la visuali
 totem-project/
 ├── README.md              # Documentación general del proyecto
 ├── .gitignore             # Exclusiones para Git
+<<<<<<< HEAD
 └── totem-inf/           # Proyecto Payload CMS (frontend, backend(panel admin))
+=======
+<<<<<<< HEAD
+└── payload-cms/           # Proyecto Payload CMS (frontend, backend(panel admin))
+=======
+└── totem-inf/           # Proyecto Payload CMS (frontend, backend(panel admin))
+>>>>>>> 623ac8f (Separando proyecto en totem-inf)
+>>>>>>> 1211f94 (Separando proyecto en totem-inf)
 ```
 
 ## 🛠️ Contribución
