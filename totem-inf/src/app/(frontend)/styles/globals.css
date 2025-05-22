@@ -1,0 +1,66 @@
+
+/* ==============================
+   Global Reset & Base
+   ============================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* ==============================
+   Variables para modo claro/oscuro
+   ============================== */
+:root {
+  --bg-color: #f5f5f5;
+  --text-color: #333;
+  --primary-color: #2c3e50;
+  --secondary-bg: #e8f4fd;
+  --transition-speed: 0.3s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --primary-color: #bb86fc;
+    --secondary-bg: #1f1f1f;
+  }
+}
+
+/* ==============================
+   Estructura Base
+   ============================== */
+.totem-container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.page-title {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.debug-info {
+  text-align: center;
+  padding: 10px;
+  background-color: var(--secondary-bg);
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 20px;
+}
