@@ -42,3 +42,5 @@ jest.config.js
 totem-inf/dist/
 totem-inf/build/
 totem-inf/.cache/
+
+totem-inf/docker-compose.override.yml
