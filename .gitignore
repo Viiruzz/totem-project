@@ -1,0 +1,44 @@
+# Node.js
+totem-inf/node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Next.js
+totem-inf/.next/
+totem-inf/out/
+
+# Payload CMS media uploads
+totem-inf/media/
+
+# dotenv files
+totem-inf/.env
+totem-inf/.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Editor configs
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Docker artefacts
+totem-inf/docker-compose.override.yml
+*.local
+
+# System
+Thumbs.db
+*.bak
+
+# Coverage / testing
+coverage/
+.nyc_output/
+jest.config.js
+
+# Build / cache
+totem-inf/dist/
+totem-inf/build/
+totem-inf/.cache/
