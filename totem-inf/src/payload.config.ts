@@ -1,4 +1,5 @@
 // storage-adapter-import-placeholder
+import { cloudinaryStorage } from 'payload-cloudinary'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -32,6 +33,19 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
+    cloudinaryStorage({
+      config: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME! || '',
+        api_key: process.env.CLOUDINARY_API_KEY! || '',
+        api_secret: process.env.CLOUDINARY_API_SECRET! || '',
+      },
+      collections: {
+        'imagenes': true, // Enable Cloudinary for Imagenes collection
+       },
+       folder: 'totem-inf',
+       disableLocalStorage: true,
+       enabled: true,
+    }),
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],

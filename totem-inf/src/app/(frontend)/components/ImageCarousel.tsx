@@ -29,6 +29,10 @@ interface ImageItem {
       height?: number
     } | null
   } | null
+  cloudinary?: {
+    secure_url?: string
+    public_id?: string
+  } | null
 }
 
 interface ImageCarouselProps {
@@ -37,9 +41,12 @@ interface ImageCarouselProps {
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const getImageUrl = (image: ImageItem) => {
-    if (image.sizes?.carrusel?.url) return image.sizes.carrusel.url
+    /*if (image.sizes?.carrusel?.url) return image.sizes.carrusel.url
     if (image.url) return image.url
-    if (image.filename) return `/media/${image.filename}`
+    if (image.filename) return `/media/${image.filename}`*/
+    if (image.cloudinary?.secure_url) return image.cloudinary.secure_url
+    if (image.url && !image.url.startsWith('/api/imagenes/file/')) return image.url
+    if (image.url) return image.url
     return '/placeholder-image.jpg'
   }
 
@@ -60,7 +67,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
               src={getImageUrl(img)}
               alt={img.nombre || 'Imagen del carrusel'}
               fill
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: 'contain' }}
               priority={idx === 0}
             />
 

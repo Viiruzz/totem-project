@@ -6,7 +6,7 @@ import ImageCarousel from './components/ImageCarousel'
 async function getData() {
   try {
     const res = await fetch(
-      'http://localhost:3000/api/imagenes?where[activo][equals]=true&sort=orden&depth=0',
+      'http://localhost:3000/api/imagenes?where[activo][equals]=true&sort=orden&depth=1',
       {
         cache: 'no-store',
       },
@@ -29,7 +29,7 @@ export default async function Home() {
     descripcion: img.descripcion ?? null,
     activo: img.activo ?? null,
     orden: img.orden ?? null,
-    url: img.url ?? null,
+    url: img.cloudinary?.secure_url ?? null,
     filename: img.filename ?? null,
     sizes: img.sizes ?? null,
   }))

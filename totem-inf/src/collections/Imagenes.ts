@@ -1,4 +1,15 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import { CollectionConfig } from 'payload'
+import { v2 as cloudinary } from 'cloudinary'
+
+// Configuración de Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!,
+})
+
 
 const Imagenes: CollectionConfig = {
   slug: 'imagenes',
@@ -14,21 +25,6 @@ const Imagenes: CollectionConfig = {
   },
   upload: {
     staticDir: 'media',
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 300,
-        position: 'centre',
-      },
-      {
-        name: 'carrusel',
-        width: 1200,
-        height: 600,
-        position: 'centre',
-      },
-    ],
-    adminThumbnail: 'thumbnail',
     mimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
   },
   fields: [
@@ -59,6 +55,29 @@ const Imagenes: CollectionConfig = {
       },
     },
   ],
+
+  hooks: {
+    afterDelete: [
+      async ({ doc }) => {
+        const publicId = doc?.cloudinary?.public_id;
+        if (publicId) {
+          try {
+            await cloudinary.uploader.destroy(publicId, {
+              invalidate: true,
+              resource_type: 'image',
+            });
+            console.log(`Imagen eliminada de Cloudinary: ${publicId}`);
+          } catch (error) {
+            console.error('Error al eliminar imagen de Cloudinary:', error);
+          }
+        } else {
+          console.warn('No se encontró public_id en el documento eliminado');
+        }
+      },
+    ],
+  }
+
+
 }
 
 export default Imagenes
