@@ -6,7 +6,7 @@ import ImageCarousel from './components/ImageCarousel'
 async function getData() {
   try {
     const res = await fetch(
-      'http://localhost:3000/api/imagenes?where[activo][equals]=true&sort=orden&depth=1',
+  `${process.env.VERCEL_URL}/api/imagenes?where[activo][equals]=true&sort=orden&depth=1`,
       {
         cache: 'no-store',
       },
