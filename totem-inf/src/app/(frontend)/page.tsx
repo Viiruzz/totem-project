@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 async function getData() {
   try {
     const res = await fetch(
-  `${process.env.VERCEL_URL}/api/imagenes?where[activo][equals]=true&sort=orden&depth=1`,
+  `https://${process.env.VERCEL_URL}/api/imagenes?where[activo][equals]=true&sort=orden&depth=1`,
       {
         cache: 'no-store',
       },
