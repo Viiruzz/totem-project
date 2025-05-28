@@ -13,7 +13,7 @@ Este proyecto tiene como objetivo desarrollar una plataforma web para la visuali
 | Área          | Herramienta             | Descripción                                                             |
 | ------------- | ----------------------- | ----------------------------------------------------------------------- |
 | Backend CMS   | Payload CMS             | Administración de contenido (noticias, imágenes, etc.)                  |
-| Base de datos | MongoDB local           | Almacenamiento de datos de Payload CMS                                  |
+| Base de datos | MongoDB Atlas           | Almacenamiento de datos de Payload CMS                                  |
 | Almacenamiento de imagenes | Cloudinary | Para guardar las imagenes subidas a la web desde el adminstrador |
 | Frontend web  | Payload CMS             | Renderizado de la web (pantalla fija con carrusel de imágenes/noticias) |
 | Tiempo real   | Socket.IO               | Actualización en tiempo real sin recargar la página                     |
