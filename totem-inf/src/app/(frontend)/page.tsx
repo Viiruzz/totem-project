@@ -1,6 +1,8 @@
 // src/app/(frontend)/page.tsx
 import React, { Suspense } from 'react'
 import ImageCarousel from './components/ImageCarousel'
+export const dynamic = 'force-dynamic'
+
 
 // Esta función obtiene los datos desde la API REST de Payload CMS
 async function getData() {
