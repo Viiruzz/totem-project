@@ -41,13 +41,9 @@ interface ImageCarouselProps {
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const getImageUrl = (image: ImageItem) => {
-    /*if (image.sizes?.carrusel?.url) return image.sizes.carrusel.url
-    if (image.url) return image.url
-    if (image.filename) return `/media/${image.filename}`*/
     if (image.cloudinary?.secure_url) return image.cloudinary.secure_url
     if (image.url && !image.url.startsWith('/api/imagenes/file/')) return image.url
-    if (image.url) return image.url
-    return '/placeholder-image.jpg'
+    return image.url || '/placeholder-image.jpg'
   }
 
   return (

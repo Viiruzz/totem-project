@@ -7,10 +7,11 @@ export const dynamic = 'force-dynamic'
 // Esta función obtiene los datos desde la API REST de Payload CMS
 async function getData() {
   try {
+    const prodUrl = process.env.NEXT_PUBLIC_SITE_URL || 'totem-project-rho.vercel.app'
     const baseUrl =
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000'
-        : `https://${process.env.NEXT_PUBLIC_SITE_URL || 'totem-project-rho.vercel.app'}`
+        : `https://${prodUrl}`
 
     const res = await fetch(
       `${baseUrl}/api/imagenes?where[activo][equals]=true&sort=orden&depth=1`,

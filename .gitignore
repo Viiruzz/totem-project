@@ -25,10 +25,6 @@ logs/
 .DS_Store
 *.swp
 
-# Docker artefacts
-totem-inf/docker-compose.override.yml
-*.local
-
 # System
 Thumbs.db
 *.bak
@@ -43,4 +39,4 @@ totem-inf/dist/
 totem-inf/build/
 totem-inf/.cache/
 
-totem-inf/docker-compose.override.yml
+
