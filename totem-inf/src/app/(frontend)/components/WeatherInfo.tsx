@@ -1,14 +1,17 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaTemperatureHigh } from 'react-icons/fa'
 import { WiHumidity } from 'react-icons/wi'
 import { BsSun } from 'react-icons/bs'
 import { RiPlantLine } from 'react-icons/ri'
-import { AiOutlineCloud } from 'react-icons/ai'
+import { MdAir } from 'react-icons/md'
 
 const WeatherInfo = () => {
-  // Simulación de datos del clima
+  const [lastUpdate, setLastUpdate] = useState('')
+  const [isClient, setIsClient] = useState(false)
+
+  // Datos del clima
   const weatherData = {
     temperature: '24.8°C',
     humidity: '55%',
@@ -17,101 +20,83 @@ const WeatherInfo = () => {
     soilMoisture: '39%'
   }
 
+  useEffect(() => {
+    // Marcar que estamos en el cliente
+    setIsClient(true)
+
+    // Función para actualizar la hora
+    const updateTime = () => {
+      setLastUpdate(new Date().toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      }))
+    }
+
+    // Actualizar inmediatamente
+    updateTime()
+
+    // Actualizar cada minuto
+    const interval = setInterval(updateTime, 60000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const weatherItems = [
+    {
+      icon: <FaTemperatureHigh className="weather-icon temperature" />,
+      label: 'Temperatura',
+      value: weatherData.temperature
+    },
+    {
+      icon: <WiHumidity className="weather-icon humidity" />,
+      label: 'Humedad',
+      value: weatherData.humidity
+    },
+    {
+      icon: <BsSun className="weather-icon uv" />,
+      label: 'Índice UV',
+      value: weatherData.uvIndex
+    },
+    {
+      icon: <MdAir className="weather-icon air" />,
+      label: 'Calidad del Aire',
+      value: weatherData.airQuality
+    },
+    {
+      icon: <RiPlantLine className="weather-icon soil" />,
+      label: 'Humedad del Suelo',
+      value: weatherData.soilMoisture
+    }
+  ]
+
   return (
     <div className="weather-info-container">
-      <div className="weather-card">
-        <div className="weather-item">
-          <FaTemperatureHigh className="weather-icon temperature" />
-          <div className="weather-text">
-            <span className="label">Temperatura</span>
-            <span className="value">{weatherData.temperature}</span>
-          </div>
-        </div>
-
-        <div className="weather-item">
-          <WiHumidity className="weather-icon humidity" />
-          <div className="weather-text">
-            <span className="label">Humedad</span>
-            <span className="value">{weatherData.humidity}</span>
-          </div>
-        </div>
-
-        <div className="weather-item">
-          <BsSun className="weather-icon uv" />
-          <div className="weather-text">
-            <span className="label">Índice UV</span>
-            <span className="value">{weatherData.uvIndex}</span>
-          </div>
-        </div>
-
-        <div className="weather-item">
-          <AiOutlineCloud className="weather-icon air" />
-          <div className="weather-text">
-            <span className="label">Calidad del Aire</span>
-            <span className="value">{weatherData.airQuality}</span>
-          </div>
-        </div>
-
-        <div className="weather-item">
-          <RiPlantLine className="weather-icon soil" />
-          <div className="weather-text">
-            <span className="label">Humedad del Suelo</span>
-            <span className="value">{weatherData.soilMoisture}</span>
-          </div>
-        </div>
+      <div className="weather-header">
+        <h2>Información Ambiental</h2>
+        <div className="weather-subtitle">Datos en tiempo real</div>
       </div>
 
-      <style jsx>{`
-        .weather-info-container {
-          background: rgba(0, 0, 0, 0.4);
-          backdrop-filter: blur(10px);
-          border-radius: 15px;
-          padding: 1.5rem;
-          color: white;
-          width: 300px;
-        }
+      <div className="weather-card">
+        {weatherItems.map((item, index) => (
+          <div key={index} className="weather-item">
+            <div className="weather-icon-container">
+              {item.icon}
+            </div>
+            <div className="weather-text">
+              <span className="label">{item.label}</span>
+              <span className="value">{item.value}</span>
+            </div>
+          </div>
+        ))}
+      </div>
 
-        .weather-card {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-
-        .weather-item {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-
-        .weather-icon {
-          font-size: 2rem;
-          min-width: 2rem;
-        }
-
-        .weather-text {
-          display: flex;
-          flex-direction: column;
-          gap: 0.25rem;
-        }
-
-        .label {
-          font-size: 0.9rem;
-          opacity: 0.8;
-        }
-
-        .value {
-          font-size: 1.2rem;
-          font-weight: 600;
-        }
-
-        .temperature { color: #ff6b6b; }
-        .humidity { color: #4ecdc4; }
-        .uv { color: #ffd93d; }
-        .air { color: #95afc0; }
-        .soil { color: #6ab04c; }
-      `}</style>
+      <div className="weather-footer">
+        <div className="last-update">
+          {isClient ? `Última actualización: ${lastUpdate}` : 'Cargando hora...'}
+        </div>
+      </div>
     </div>
   )
 }
 
-export default WeatherInfo 
+export default WeatherInfo

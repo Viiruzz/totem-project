@@ -1,5 +1,61 @@
+@media (max-height: 700px) {
+  :root {
+    --navbar-height: 70px;
+  }
+
+  .totem-container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .carousel-container {
+    height: 50vh;
+    min-height: 280px;
+    max-height: 50vh;
+  }
+
+  .weather-info-container {
+    max-height: 45vh;
+    padding: 15px;
+  }
+
+  .weather-header {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+
+  .weather-card {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .weather-item {
+    padding: 8px;
+  }
+
+  .weather-footer {
+    padding-top: 6px;
+  }
+
+  .image-info {
+    bottom: 45px;
+    padding: 15px;
+  }
+
+  .swiper-pagination {
+    bottom: 10px !important;
+    padding: 6px 12px !important;
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+    margin: 0 4px !important;
+  }
+}
+
 /* ==============================
-   Global Reset & Base
+   Global Reset & Base - OPTIMIZADO
    ============================== */
 * {
   box-sizing: border-box;
@@ -10,64 +66,45 @@
 html,
 body {
   height: 100%;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  background: #1a1a1a;
+  color: #ffffff;
+  overflow-x: hidden;
 }
 
 /* ==============================
-   Variables para modo claro/oscuro
+   Variables simplificadas
    ============================== */
 :root {
-  --bg-color: #f0f2f5;
-  --text-color: #333;
-  --primary-color: #004837;
-  --secondary-bg: #ffffff;
-  --card-bg: #e0e0e0;
-  --content-bg: #f5f5f5;
-  --transition-speed: 0.3s;
-  --spinner-color: #004837;
-  --spinner-size: 40px;
-  --navbar-height: 80px;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-card: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --accent-green: #00d4aa;
+  --accent-blue: #007acc;
   --navbar-bg: #004837;
-  --navbar-text: #ffffff;
-  --carousel-bg: #ffffff;
-  --carousel-border: #e1e4e8;
-  --swiper-pagination-bottom: 10px;
-  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --card-radius: 12px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #1a1a1a;
-    --text-color: #f0f0f0;
-    --primary-color: #00684f;
-    --secondary-bg: #2d2d2d;
-    --card-bg: #333333;
-    --content-bg: #2d2d2d;
-    --spinner-color: #00684f;
-    --navbar-bg: #003527;
-    --carousel-bg: #2d2d2d;
-    --carousel-border: #404040;
-    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
+  --navbar-height: 80px;
+  --border-radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --transition: all 0.2s ease;
 }
 
 /* ==============================
-   Navbar Styles
+   Navbar - Simplificado
    ============================== */
 .navbar {
-  background-color: var(--navbar-bg);
+  background: var(--navbar-bg);
   height: var(--navbar-height);
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navbar-container {
@@ -86,13 +123,8 @@ body {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  min-width: 120px;
   height: 100%;
   padding: 10px 0;
-}
-
-.navbar-right {
-  justify-content: flex-end;
 }
 
 .navbar-center {
@@ -102,13 +134,20 @@ body {
 }
 
 .navbar-center h1 {
-  color: var(--navbar-text);
-  font-size: 1.5rem;
+  color: var(--text-primary);
+  font-size: 1.6rem;
   font-weight: 600;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
 }
 
 .logo-container {
@@ -116,17 +155,36 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px;
+  padding: 8px;
 }
 
-.logo-container img {
-  max-height: 100%;
-  width: auto;
-  object-fit: contain;
+.datetime-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-right: 15px;
+}
+
+.time-display {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-green);
+  font-family: 'Courier New', monospace;
+}
+
+.date-display {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 /* ==============================
-   Estructura Base
+   Layout Principal
    ============================== */
 .totem-container {
   width: 100%;
@@ -134,38 +192,355 @@ body {
   margin: var(--navbar-height) auto 0;
   padding: 20px;
   min-height: calc(100vh - var(--navbar-height));
-  background-color: var(--bg-color);
+  max-height: calc(100vh - var(--navbar-height));
   display: flex;
-  gap: 2rem;
+  gap: 20px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
+  overflow: hidden;
 }
 
 .carousel-container {
   flex: 1;
   min-width: 0;
-  max-width: 1400px;
-  background-color: var(--card-bg);
-  border-radius: var(--card-radius);
+  max-width: 1200px;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
   padding: 20px;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
   height: calc(100vh - var(--navbar-height) - 40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .weather-container {
-  width: 350px;
+  width: 320px;
   flex-shrink: 0;
-  background-color: var(--card-bg);
-  border-radius: var(--card-radius);
-  padding: 20px;
-  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-container,
+.weather-info-container {
   height: calc(100vh - var(--navbar-height) - 40px);
+  max-height: calc(100vh - var(--navbar-height) - 40px);
+  overflow: hidden;
+}
+
+.weather-info-container {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ==============================
-   Loading Spinner
+   Carousel - Optimizado
+   ============================== */
+.carousel-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  overflow: visible;
+  position: relative;
+}
+
+.carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel-header h2 {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.carousel-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.slide-counter {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.carousel-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+}
+
+.carousel-main {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+
+.slide-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.7) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.image-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  z-index: 3;
+  color: #ffffff;
+}
+
+.image-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.image-description {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  max-width: 80%;
+}
+
+/* ==============================
+   Weather Info - Optimizado
+   ============================== */
+.weather-info-container {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  color: var(--text-primary);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-header {
+  margin-bottom: 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.weather-header h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.weather-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.weather-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.weather-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.weather-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.weather-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.weather-icon {
+  font-size: 1.6rem;
+}
+
+.weather-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.weather-text .label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.weather-text .value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.weather-footer {
+  text-align: center;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.last-update {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+}
+
+/* Colores para iconos */
+.temperature {
+  color: #ff6b6b;
+}
+
+.humidity {
+  color: #4ecdc4;
+}
+
+.uv {
+  color: #ffd93d;
+}
+
+.air {
+  color: #95afc0;
+}
+
+.soil {
+  color: #6ab04c;
+}
+
+/* ==============================
+   Swiper - Simplificado
+   ============================== */
+.swiper {
+  border-radius: 6px;
+  overflow: hidden;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+/* Paginación - Movida debajo de la imagen */
+.swiper-pagination {
+  position: relative !important;
+  bottom: auto !important;
+  padding: 12px 8px 8px 8px !important;
+  margin-top: auto;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 6px 6px;
+}
+
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 8px 8px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 6px 6px;
+}
+
+.custom-pagination .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.4) !important;
+  opacity: 1;
+  width: 10px !important;
+  height: 10px !important;
+  margin: 0 4px !important;
+  transition: var(--transition);
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  background: var(--accent-green) !important;
+  transform: scale(1.2);
+}
+
+/* ==============================
+   Loading
    ============================== */
 .loading {
   display: flex;
@@ -176,16 +551,11 @@ body {
   gap: 20px;
 }
 
-.loading p {
-  color: var(--text-color);
-  font-size: 1rem;
-}
-
 .loading-spinner {
-  width: var(--spinner-size);
-  height: var(--spinner-size);
-  border: 4px solid var(--secondary-bg);
-  border-top: 4px solid var(--spinner-color);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top: 3px solid var(--accent-green);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -201,141 +571,99 @@ body {
 }
 
 /* ==============================
-   Carousel Styles
+   Responsive
    ============================== */
-.swiper-image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 70vh;
-  background-color: var(--carousel-bg);
-  transition: background-color var(--transition-speed) ease;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.swiper-image-wrapper::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100%;
-  background: linear-gradient(to bottom,
-      transparent 0%,
-      transparent 50%,
-      rgba(0, 0, 0, 0.7) 85%,
-      rgba(0, 0, 0, 0.85) 100%);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.carousel-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  z-index: 10;
-  text-align: left;
-}
-
-.caption-text {
-  color: white;
-  text-align: left;
-  font-size: 1.1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  margin: 0;
-  max-width: 800px;
-  position: relative;
-  z-index: 3;
-}
-
-/* Swiper custom styles */
-.swiper {
-  border-radius: 8px;
-  overflow: hidden;
-  padding-bottom: 40px !important;
-}
-
-.swiper-pagination {
-  bottom: 0 !important;
-}
-
-.swiper-pagination-bullet {
-  background: var(--navbar-text) !important;
-  opacity: 0.6;
-  width: 10px !important;
-  height: 10px !important;
-  margin: 0 6px !important;
-}
-
-.swiper-pagination-bullet-active {
-  opacity: 1;
-  background: var(--primary-color) !important;
-}
-
-/* Responsive adjustments */
 @media (max-width: 1200px) {
   .totem-container {
     flex-direction: column;
-    align-items: stretch;
-    padding: 10px;
+    padding: 15px;
+    gap: 15px;
   }
 
   .carousel-container {
-    width: 100%;
-    height: 500px;
+    height: 60vh;
+    min-height: 400px;
   }
 
   .weather-container {
     width: 100%;
-    height: 500px;
-    margin-top: 1rem;
+  }
+
+  .carousel-container,
+  .weather-info-container {
+    height: auto;
+    min-height: 400px;
+  }
+
+  .weather-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
   }
 }
 
 @media (max-width: 768px) {
-  .totem-container {
-    padding: 10px;
-    gap: 1rem;
+  :root {
+    --navbar-height: 70px;
   }
 
-  .carousel-container,
-  .weather-container {
-    height: 400px;
+  .navbar-container {
+    padding: 0 15px;
+    gap: 15px;
   }
 
   .navbar-center h1 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
-  .logo-container {
-    font-size: 1.5rem;
+  .subtitle {
+    display: none;
+  }
+
+  .datetime-container {
+    display: none;
+  }
+
+  .totem-container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .carousel-container {
+    height: 50vh;
+    min-height: 300px;
+    padding: 15px;
+  }
+
+  .carousel-main {
+    padding: 10px;
+  }
+
+  .weather-info-container {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .weather-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .weather-item {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-center h1 {
+    font-size: 1.1rem;
   }
 
   .carousel-container {
     padding: 10px;
-    margin: 10px;
-    border-radius: 8px;
   }
 
-  .swiper-image-wrapper {
-    height: 50vh;
-  }
-
-  .caption-text {
-    font-size: 1rem;
-    padding: 8px;
-  }
-
-  .swiper {
-    padding-bottom: 30px !important;
-  }
-
-  .swiper-pagination-bullet {
-    width: 8px !important;
-    height: 8px !important;
-    margin: 0 4px !important;
+  .weather-info-container {
+    padding: 15px;
   }
 }

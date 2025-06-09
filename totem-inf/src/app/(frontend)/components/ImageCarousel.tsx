@@ -1,13 +1,12 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination, Keyboard } from 'swiper/modules'
+import { Autoplay, Keyboard } from 'swiper/modules'
 import Image from 'next/image'
 
 // Importar los estilos de Swiper
 import 'swiper/css'
-import 'swiper/css/pagination'
 
 interface ImageItem {
   id: string
@@ -40,6 +39,8 @@ interface ImageCarouselProps {
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
   const getImageUrl = useMemo(
     () => (image: ImageItem) => {
       if (image.cloudinary?.secure_url) return image.cloudinary.secure_url
@@ -56,43 +57,109 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
     return url.toLowerCase().endsWith('.gif')
   }
 
-  return (
-    <Swiper
-      modules={[Autoplay, Pagination, Keyboard]}
-      autoplay={{ delay: 5000, disableOnInteraction: false }}
-      loop={true}
-      pagination={{ clickable: true }}
-      keyboard={{ enabled: true, onlyInViewport: true }}
-      slidesPerView={1}
-      style={{ width: '100%', height: '100%' }}
-      observer={true}
-      observeParents={true}
-    >
-      {images.map((img, idx) => (
-        <SwiperSlide key={`${img.id || 'slide'}-${idx}`}>
-          <div className="swiper-image-wrapper">
-            <Image
-              src={imageUrls[idx]}
-              alt={img.nombre || 'Imagen del carrusel'}
-              fill
-              style={{ objectFit: 'contain' }}
-              priority={idx === 0}
-              loading={idx === 0 ? 'eager' : 'lazy'}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-              quality={75}
-              unoptimized={isGif(imageUrls[idx])}
-            />
+  const handleSlideChange = (swiper: any) => {
+    // Corregir el índice cuando hay loop activado
+    const realIndex = swiper.realIndex
+    setCurrentSlide(realIndex)
+  }
 
-            {img.descripcion && (
-              <div className="carousel-caption">
-                <div className="caption-background" />
-                <div className="caption-text">{img.descripcion}</div>
-              </div>
-            )}
+  if (images.length === 0) {
+    return (
+      <div className="carousel-wrapper">
+        <div className="carousel-header">
+          <h2>Galería Digital</h2>
+          <div className="carousel-info">
+            <span className="slide-counter">0 / 0</span>
           </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+        </div>
+        <div className="carousel-main">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            flexDirection: 'column',
+            gap: '1rem',
+            color: 'rgba(255, 255, 255, 0.6)'
+          }}>
+            <div style={{ fontSize: '3rem' }}>📸</div>
+            <h3>No hay imágenes disponibles</h3>
+            <p>Agrega algunas imágenes al sistema para mostrar aquí</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="carousel-wrapper">
+      <div className="carousel-header">
+        <h2>Galería Digital</h2>
+        <div className="carousel-info">
+          <span className="slide-counter">
+            {currentSlide + 1} / {images.length}
+          </span>
+          <div className="carousel-status">
+            <div className="status-dot"></div>
+            <span>En vivo</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="carousel-main">
+        <Swiper
+          modules={[Autoplay, Keyboard]}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+          }}
+          loop={images.length > 1}
+          keyboard={{ enabled: true, onlyInViewport: true }}
+          slidesPerView={1}
+          speed={800}
+          onSlideChange={handleSlideChange}
+          style={{ width: '100%', height: '100%' }}
+          observer={true}
+          observeParents={true}
+        >
+          {images.map((img, idx) => (
+            <SwiperSlide key={`${img.id || 'slide'}-${idx}`}>
+              <div className="slide-content">
+                <div className="image-container">
+                  <Image
+                    src={imageUrls[idx]}
+                    alt={img.nombre || 'Imagen del carrusel'}
+                    fill
+                    style={{ objectFit: 'contain' }}
+                    priority={idx === 0}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                    quality={75}
+                    unoptimized={isGif(imageUrls[idx])}
+                  />
+
+                  {(img.descripcion) && (
+                    <>
+                      <div className="image-overlay"></div>
+                      <div className="image-info">
+                        {/* Nombre de la imagen comentado para uso futuro */}
+                        {/* {img.nombre && (
+                          <h3 className="image-title">{img.nombre}</h3>
+                        )} */}
+                        {img.descripcion && (
+                          <p className="image-description">{img.descripcion}</p>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
   )
 }
 
