@@ -57,7 +57,7 @@ const Navbar = () => {
 
         <div className="navbar-center">
           <h1>Tótem Informativo | Área Informática</h1>
-          <div className="subtitle">Sistema de Información Digital</div>
+          <div className="subtitle">Sistema de Información del Área</div>
         </div>
 
         <div className="navbar-right">

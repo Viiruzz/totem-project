@@ -84,7 +84,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           }}>
             <div style={{ fontSize: '3rem' }}>📸</div>
             <h3>No hay imágenes disponibles</h3>
-            <p>Agrega algunas imágenes al sistema para mostrar aquí</p>
+            <p>El desarrollador está ocupado y pronto publicará imágenes</p>
           </div>
         </div>
       </div>
