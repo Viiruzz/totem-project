@@ -1,6 +1,8 @@
 // src/app/(frontend)/page.tsx
 import React, { Suspense } from 'react'
 import ImageCarousel from './components/ImageCarousel'
+import Navbar from './components/Navbar'
+import WeatherInfo from './components/WeatherInfo'
 export const dynamic = 'force-dynamic'
 
 // Función para obtener la URL base
@@ -72,26 +74,25 @@ export default async function Home() {
   }))
 
   return (
-    <div className="totem-layout">
-      <h1 className="page-title">Totem Invernadero</h1>
-
-      <div className="carousel-container">
-        <Suspense
-          fallback={
-            <div className="loading">
-              <div className="loading-spinner"></div>
-              <p>Cargando imágenes...</p>
-            </div>
-          }
-        >
-          <ImageCarousel images={imageItems} key={imageItems.length} />
-        </Suspense>
-      </div>
-
-      <div className="debug-info">
-        <p>Imágenes encontradas: {imagenes.length}</p>
-        {imagenes.length > 0 && <p>Primera imagen: {imagenes[0].nombre || 'Sin título'}</p>}
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <main className="totem-container">
+        <div className="carousel-container">
+          <Suspense
+            fallback={
+              <div className="loading">
+                <div className="loading-spinner"></div>
+                <p>Cargando imágenes...</p>
+              </div>
+            }
+          >
+            <ImageCarousel images={imageItems} key={imageItems.length} />
+          </Suspense>
+        </div>
+        <aside className="weather-container">
+          <WeatherInfo />
+        </aside>
+      </main>
+    </>
   )
 }
