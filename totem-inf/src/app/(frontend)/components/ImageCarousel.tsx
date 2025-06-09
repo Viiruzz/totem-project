@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination, Keyboard } from 'swiper/modules'
 import Image from 'next/image'
@@ -40,14 +40,20 @@ interface ImageCarouselProps {
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
-  const getImageUrl = (image: ImageItem) => {
-    /*if (image.sizes?.carrusel?.url) return image.sizes.carrusel.url
-    if (image.url) return image.url
-    if (image.filename) return `/media/${image.filename}`*/
-    if (image.cloudinary?.secure_url) return image.cloudinary.secure_url
-    if (image.url && !image.url.startsWith('/api/imagenes/file/')) return image.url
-    if (image.url) return image.url
-    return '/placeholder-image.jpg'
+  const getImageUrl = useMemo(
+    () => (image: ImageItem) => {
+      if (image.cloudinary?.secure_url) return image.cloudinary.secure_url
+      if (image.url && !image.url.startsWith('/api/imagenes/file/')) return image.url
+      if (image.url) return image.url
+      return '/placeholder-image.jpg'
+    },
+    [],
+  )
+
+  const imageUrls = useMemo(() => images.map(img => getImageUrl(img)), [images, getImageUrl])
+
+  const isGif = (url: string) => {
+    return url.toLowerCase().endsWith('.gif')
   }
 
   return (
@@ -59,26 +65,28 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
       keyboard={{ enabled: true, onlyInViewport: true }}
       slidesPerView={1}
       style={{ width: '100%', height: '100%' }}
+      observer={true}
+      observeParents={true}
     >
       {images.map((img, idx) => (
-        <SwiperSlide key={idx}>
+        <SwiperSlide key={`${img.id || 'slide'}-${idx}`}>
           <div className="swiper-image-wrapper">
             <Image
-              src={getImageUrl(img)}
+              src={imageUrls[idx]}
               alt={img.nombre || 'Imagen del carrusel'}
               fill
               style={{ objectFit: 'contain' }}
               priority={idx === 0}
+              loading={idx === 0 ? 'eager' : 'lazy'}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              quality={75}
+              unoptimized={isGif(imageUrls[idx])}
             />
 
             {img.descripcion && (
               <div className="carousel-caption">
                 <div className="caption-background" />
-                {img.descripcion && (
-                  <div className="caption-text" key={img.id || idx}>
-                    {img.descripcion}
-                  </div>
-                )}
+                <div className="caption-text">{img.descripcion}</div>
               </div>
             )}
           </div>

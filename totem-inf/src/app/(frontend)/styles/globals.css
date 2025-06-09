@@ -1,4 +1,3 @@
-
 /* ==============================
    Global Reset & Base
    ============================== */
@@ -8,7 +7,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: 'Arial', sans-serif;
   line-height: 1.5;
@@ -26,6 +26,8 @@ html, body {
   --primary-color: #2c3e50;
   --secondary-bg: #e8f4fd;
   --transition-speed: 0.3s;
+  --spinner-color: #2c3e50;
+  --spinner-size: 40px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,6 +36,7 @@ html, body {
     --text-color: #f0f0f0;
     --primary-color: #bb86fc;
     --secondary-bg: #1f1f1f;
+    --spinner-color: #bb86fc;
   }
 }
 
@@ -54,6 +57,7 @@ html, body {
   margin-bottom: 20px;
   font-size: 1.8rem;
   font-weight: bold;
+  transition: color var(--transition-speed) ease;
 }
 
 .debug-info {
@@ -63,4 +67,97 @@ html, body {
   border-radius: 4px;
   font-size: 14px;
   margin-top: 20px;
+  transition: background-color var(--transition-speed) ease;
+}
+
+/* ==============================
+   Loading Spinner
+   ============================== */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 20px;
+}
+
+.loading p {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.loading-spinner {
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: 4px solid var(--secondary-bg);
+  border-top: 4px solid var(--spinner-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==============================
+   Carousel Styles
+   ============================== */
+.swiper-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  background-color: var(--bg-color);
+  transition: background-color var(--transition-speed) ease;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  z-index: 10;
+  text-align: left;
+}
+
+.caption-background {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  z-index: -1;
+}
+
+.caption-text {
+  color: white;
+  text-align: left;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  margin: 0;
+  max-width: 800px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .swiper-image-wrapper {
+    height: 50vh;
+  }
+
+  .caption-text {
+    font-size: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
 }
