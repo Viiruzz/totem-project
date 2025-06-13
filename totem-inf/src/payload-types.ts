@@ -136,8 +136,17 @@ export interface User {
  */
 export interface Imagene {
   id: string;
+  /**
+   * Título descriptivo para la imagen
+   */
   nombre: string;
+  /**
+   * Descripción que aparecerá sobre la imagen en el carrusel
+   */
   descripcion?: string | null;
+  /**
+   * Desmarcar para ocultar temporalmente la imagen
+   */
   activo?: boolean | null;
   /**
    * Las imágenes se mostrarán de menor a mayor según este número
@@ -215,6 +224,24 @@ export interface Imagene {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    carrusel?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -326,6 +353,30 @@ export interface ImagenesSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        carrusel?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

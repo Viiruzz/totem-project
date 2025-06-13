@@ -245,7 +245,7 @@ body {
   flex-direction: column;
   background: rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius);
-  overflow: visible;
+  overflow: hidden;
   position: relative;
 }
 
