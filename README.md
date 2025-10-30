@@ -18,7 +18,6 @@ Este proyecto tiene como objetivo desarrollar una plataforma web para la visuali
 | Frontend web  | Payload CMS             | Renderizado de la web (pantalla fija con carrusel de imágenes/noticias) |
 | Tiempo real   | Socket.IO               | Actualización en tiempo real sin recargar la página                     |
 | IoT (futuro)  | ESP32 + MQTT + Node-RED | Sensado de datos ambientales, transmisión y transformación              |
-| Acceso remoto | Tailscale               | Acceso desde otras redes vía VPN segura                                 |
 
 ---
 
