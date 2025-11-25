@@ -3,18 +3,18 @@
 import React, { useMemo, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Keyboard } from 'swiper/modules'
+import type { Swiper as SwiperType } from 'swiper/types'
 import Image from 'next/image'
 
 // Importar los estilos de Swiper
 import 'swiper/css'
 
-interface ImageItem {
+export interface ImageItem {
   id: string
   nombre?: string | null
   descripcion?: string | null
   url?: string | null
   filename?: string | null
-  activo?: boolean | null
   orden?: number | null
   sizes?: {
     thumbnail?: {
@@ -36,9 +36,10 @@ interface ImageItem {
 
 interface ImageCarouselProps {
   images: ImageItem[]
+  isRefreshing?: boolean
 }
 
-const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
+const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, isRefreshing }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const getImageUrl = useMemo(
@@ -51,13 +52,13 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
     [],
   )
 
-  const imageUrls = useMemo(() => images.map(img => getImageUrl(img)), [images, getImageUrl])
+  const imageUrls = useMemo(() => images.map((img) => getImageUrl(img)), [images, getImageUrl])
 
   const isGif = (url: string) => {
     return url.toLowerCase().endsWith('.gif')
   }
 
-  const handleSlideChange = (swiper: any) => {
+  const handleSlideChange = (swiper: SwiperType) => {
     // Corregir el índice cuando hay loop activado
     const realIndex = swiper.realIndex
     setCurrentSlide(realIndex)
@@ -73,15 +74,17 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           </div>
         </div>
         <div className="carousel-main">
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-            flexDirection: 'column',
-            gap: '1rem',
-            color: 'rgba(255, 255, 255, 0.6)'
-          }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              flexDirection: 'column',
+              gap: '1rem',
+              color: 'rgba(255, 255, 255, 0.6)',
+            }}
+          >
             <div style={{ fontSize: '3rem' }}>📸</div>
             <h3>No hay imágenes disponibles</h3>
             <p>El desarrollador está ocupado y pronto publicará imágenes</p>
@@ -100,8 +103,14 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
             {currentSlide + 1} / {images.length}
           </span>
           <div className="carousel-status">
-            <div className="status-dot"></div>
-            <span>En vivo</span>
+            <div
+              className="status-dot"
+              style={{
+                backgroundColor: isRefreshing ? '#fbbf24' : '#4ade80',
+                boxShadow: isRefreshing ? '0 0 10px rgba(251,191,36,0.8)' : undefined,
+              }}
+            ></div>
+            <span className="status-text">{isRefreshing ? 'Actualizando…' : 'En vivo'}</span>
           </div>
         </div>
       </div>
@@ -112,7 +121,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,
-            pauseOnMouseEnter: true
+            pauseOnMouseEnter: true,
           }}
           loop={images.length > 1}
           keyboard={{ enabled: true, onlyInViewport: true }}
@@ -139,7 +148,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
                     unoptimized={isGif(imageUrls[idx])}
                   />
 
-                  {(img.descripcion) && (
+                  {img.descripcion && (
                     <>
                       <div className="image-overlay"></div>
                       <div className="image-info">
@@ -147,9 +156,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
                         {/* {img.nombre && (
                           <h3 className="image-title">{img.nombre}</h3>
                         )} */}
-                        {img.descripcion && (
-                          <p className="image-description">{img.descripcion}</p>
-                        )}
+                        {img.descripcion && <p className="image-description">{img.descripcion}</p>}
                       </div>
                     </>
                   )}

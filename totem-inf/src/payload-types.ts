@@ -145,10 +145,6 @@ export interface Imagene {
    */
   descripcion?: string | null;
   /**
-   * Desmarcar para ocultar temporalmente la imagen
-   */
-  activo?: boolean | null;
-  /**
    * Las imágenes se mostrarán de menor a mayor según este número
    */
   orden?: number | null;
@@ -322,7 +318,6 @@ export interface UsersSelect<T extends boolean = true> {
 export interface ImagenesSelect<T extends boolean = true> {
   nombre?: T;
   descripcion?: T;
-  activo?: T;
   orden?: T;
   cloudinary?:
     | T

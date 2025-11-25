@@ -21,7 +21,7 @@ const Imagenes: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'nombre',
-    defaultColumns: ['nombre', 'activo', 'orden', 'updatedAt'],
+    defaultColumns: ['nombre', 'orden', 'updatedAt'],
     listSearchableFields: ['nombre', 'descripcion'],
   },
   upload: {
@@ -61,15 +61,6 @@ const Imagenes: CollectionConfig = {
       admin: {
         description: 'Descripción que aparecerá sobre la imagen en el carrusel',
         rows: 3,
-      },
-    },
-    {
-      name: 'activo',
-      type: 'checkbox',
-      label: 'Mostrar en el carrusel',
-      defaultValue: true,
-      admin: {
-        description: 'Desmarcar para ocultar temporalmente la imagen',
       },
     },
     {
@@ -124,7 +115,6 @@ const Imagenes: CollectionConfig = {
         console.log(`✅ [${operation.toUpperCase()}] Imagen procesada:`, {
           id: doc.id,
           nombre: doc.nombre,
-          activo: doc.activo,
           cloudinaryPublicId: doc.cloudinary?.public_id,
           cloudinaryUrl: doc.cloudinary?.secure_url,
           localUrl: doc.url,

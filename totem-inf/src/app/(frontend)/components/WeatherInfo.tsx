@@ -133,7 +133,6 @@ const WeatherInfo = () => {
     <div className="weather-info-container">
       <div className="weather-header">
         <h2>Información Ambiental</h2>
-        <div className="weather-subtitle">Datos en tiempo real</div>
       </div>
 
       <div className="weather-card">
